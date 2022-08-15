@@ -1,0 +1,79 @@
+Typescript
+
+Particularity:
+-  Have a static typing for declaring variables.
+-  Need to compile our code (transpilation).
+-  Works better in large project or group projects.
+ 
+ Install:
+ ! Without node
+ -  Install node and in the terminal type : i -g Typescript
+ -  Type tsc --init to initiate the config file for Typescript.
+ - Put your .ts file in another folder (src)
+ -  Un-comment those lines in tsconfig.json 
+    (rootDir, and add "./src" )
+    (sourceMap)
+    (sourceDir, and add "./dist" )
+    (removeComments)
+    (noEmitOnError)
+    (noUnusedParameters)
+    (noImplicitReturns)
+    (noUnusedLocals)
+-  Compile and launch your ts file in the terminal simply with the command line tsc --watch.
+! With node
+-  npm init -y
+-  npm i typescript --save-dev
+-  créer un fichier .ts (app)
+-  npx tsc app.ts (créer un ficher .js sur base de notre fichier .ts)
+
+Debug:
+-  Click on the first ligne breakpoint of your ts file (red dot).
+-  On the run and debug panel, click on create launch.json file
+-  Edit that launch file by adding at the line 15("preLaunchTask": "tsc: build - tsconfig.json",).
+-  On the debug panel, be sure the ts file is selected in the breakpoints and click on Launch Program above (F5)
+
+Variables & types:
+-  Any:
+    It's rarely used because it allows all the type of variables but we can use it when we don't don't what kind of parameter a function will recieve (for example).
+-  Array:
+    If we use and empty array, you need to define the type otherwise it will take any (good : number[], bad: [], ok: [1, 2, 3]).
+    It can be a generic type (example: const variable: Array<string | number> = ["string", number])
+-  Tuple:
+    Type of array in which we declare every type that would be inside of it (example : [number, string]). Limit to 2 values is best.
+-  Enum
+    Start declaration with > const enum Name { propriété = valeur } (example: const enum Size { Sm = 1, Md, Lg }).
+    Then declare let mySize: Size = Size.Md;
+    It will return let mySize = 2; in js file after compiling.
+-  Function:
+    function myFunction(parameter: number): returnType{ return }.
+    If we want to make a parameter optional we add ? after the parameterName.
+    We can give a default value using =.
+-  For other type, use their keyword (example: date: Date = new Date()).
+-  The void type of return of a function enables us to skip the type of the return. from the function (the code won't be wrong if we specify a return nonetheless).
+-  If ts can't define the type, you can specify it with the keyword as after the variable declaration (example: const variable = document.querySelector('#element') as HTMLButtonElement).
+-  We can accept multiple types by using the | in the type declaration (example: variable: string | number).
+-  If the value of the variable can be null, we need to add ? before calling a method (example: variable?.addEventListener()).
+-  If we want to specify that the variable can't be null, we add the ! mark at the end of the declaration (example: const variable = document.querySelector('#example')!).
+-  When we call an method on a variable, we need to extend the type returned so it doesn't cause trouble in our code (example: function name<Type extends {length: number}>(arg: Type): Type {
+    console.log(arg.length)
+    return arg
+})
+
+Objects:
+-  Declare the type inside an object (example: let variable: { parameter: type} = { parameter: value}).
+-  Use readonly prefix when you want to make the variable un-modifiable.
+-  If we want to specify an undefined amount of key that our object might contain, we will write as follow ({[key: type]: type}).
+
+En js:
+-  // @ts-check
+Commentaire en js qui permet de vérifier le code via typescript.
+-  /** @param {} **/
+Commentaire qui utilise la js doc afin de vérifier notre code de la ligne suivante.
+
+Narrowing (type):
+-  Using a condition to avoid the null or undefined possiblity error in ts. (if(variable){}).
+-  Exist also with verifying types (example: if(typeof variable === type){}).
+-  Another way is to use the | operator while definying the types (example: function name(variable: string | number){ if(instanceof variable Date){ variable } }) or (example: function name(a: string, b: number){ if(a === b){a} }).
+-  With in operator (example: function name(variable: MouseEvent | HTMLInputElement){ if(MouseEvent in variable){ variable } }).
+-  We can also define the type return from a function to be the same type as passed as argument (example: function name<ArgType>(arg: ArgType): ArgType { return arg; })
+-  The last method is to create a function before and to call it to verify the type (example: function name(variable: any): variable is Date{ return variable instanceof Date } function example(variable: Date | HTMLInputElement){ if(name(variable)){ variable } }).
